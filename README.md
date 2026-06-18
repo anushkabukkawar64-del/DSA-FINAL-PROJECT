@@ -234,23 +234,8 @@ Growth Percentage Displayed
 
 Insert screenshots here:
 
-Figure 1 – Dashboard
+<img width="1470" height="956" alt="Screenshot 2026-06-19 at 12 12 14 AM" src="https://github.com/user-attachments/assets/12cd5b16-e980-4c12-874e-6962ffe455da" />
 
-Figure 2 – Stock Market Directory
-
-Figure 3 – Portfolio Holdings
-
-Figure 4 – Buy Stock Operation
-
-Figure 5 – Sell Stock Operation
-
-Figure 6 – Alert Queue
-
-Figure 7 – Graph Traversal
-
-Figure 8 – Search Results
-
-Figure 9 – Sorting Results
 
 2.11 RESULTS AND OBSERVATIONS
 
