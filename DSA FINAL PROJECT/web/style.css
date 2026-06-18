@@ -1,0 +1,817 @@
+/* ============================================================
+   style.css - Smart Indian Stock Market Platform
+   Modern Finance Light Theme
+   ============================================================ */
+
+:root {
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --primary: #2563EB;
+    --primary-hover: #1D4ED8;
+    --accent-green: #10B981;
+    --accent-green-bg: #E6F4EA;
+    --accent-red: #EF4444;
+    --accent-red-bg: #FCE8E6;
+    --border-color: #E2E8F0;
+    --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --hover-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-heading: 'Space Grotesk', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    padding: 24px;
+    min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────────
+   App Header
+   ───────────────────────────────────────────── */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 16px 24px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    box-shadow: var(--card-shadow);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo .flag-icon {
+    font-size: 32px;
+}
+
+.header-logo h1 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.header-logo .subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.market-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-dot.green {
+    background-color: var(--accent-green);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+.trend-badge {
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.trend-badge.bullish {
+    background-color: var(--accent-green-bg);
+    color: var(--accent-green);
+}
+
+.trend-badge.bearish {
+    background-color: var(--accent-red-bg);
+    color: var(--accent-red);
+}
+
+/* ─────────────────────────────────────────────
+   Dashboard Layout Grid
+   ───────────────────────────────────────────── */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.col-span-3 {
+    grid-column: span 3;
+}
+
+.col-span-2 {
+    grid-column: span 2;
+}
+
+.col-span-1 {
+    grid-column: span 1;
+}
+
+/* ─────────────────────────────────────────────
+   Card Styles
+   ───────────────────────────────────────────── */
+.card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--hover-shadow);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--text-main);
+}
+
+.border-b {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+}
+
+/* ─────────────────────────────────────────────
+   Metrics Card
+   ───────────────────────────────────────────── */
+.metrics-card {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 24px;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metric-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.metric-val {
+    font-size: 24px;
+    font-weight: 800;
+    font-family: var(--font-heading);
+}
+
+.metric-val.positive {
+    color: var(--accent-green);
+}
+
+.metric-val.negative {
+    color: var(--accent-red);
+}
+
+.metrics-card .divider {
+    width: 1px;
+    height: 48px;
+    background-color: var(--border-color);
+}
+
+/* ─────────────────────────────────────────────
+   Tables
+   ───────────────────────────────────────────── */
+.table-container {
+    overflow-x: auto;
+    max-height: 400px;
+    position: relative;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th {
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+td {
+    padding: 14px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+tr:hover td {
+    background-color: #F8FAFC;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.change-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.change-pill.positive {
+    background-color: var(--accent-green-bg);
+    color: var(--accent-green);
+}
+
+.change-pill.negative {
+    background-color: var(--accent-red-bg);
+    color: var(--accent-red);
+}
+
+/* ─────────────────────────────────────────────
+   Chips / Badges
+   ───────────────────────────────────────────── */
+.chip {
+    padding: 6px 12px;
+    border-radius: 9999px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chip:hover {
+    border-color: var(--text-muted);
+}
+
+.chip.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+/* ─────────────────────────────────────────────
+   Forms & Inputs
+   ───────────────────────────────────────────── */
+.trade-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+select, input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.2s;
+}
+
+select:focus, input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.trade-type-selector {
+    display: flex;
+    gap: 12px;
+}
+
+.radio-btn {
+    flex: 1;
+    cursor: pointer;
+}
+
+.radio-btn input {
+    display: none;
+}
+
+.radio-btn span {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.radio-btn.buy input:checked + span {
+    background-color: var(--accent-green-bg);
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+.radio-btn.sell input:checked + span {
+    background-color: var(--accent-red-bg);
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+}
+
+.estimated-cost {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-primary);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    border: 1px solid var(--border-color);
+}
+
+.estimated-cost strong {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: var(--primary);
+}
+
+/* ─────────────────────────────────────────────
+   Buttons
+   ───────────────────────────────────────────── */
+.btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px dashed var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.mt-2 { margin-top: 8px; }
+
+/* ─────────────────────────────────────────────
+   Alerts Feed Panel (FIFO circular representation)
+   ───────────────────────────────────────────── */
+.alerts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 290px;
+    overflow-y: auto;
+}
+
+.alert-item {
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid var(--border-color);
+    background-color: var(--bg-primary);
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: slideIn 0.3s ease-out;
+}
+
+.alert-item.price-spike {
+    border-left-color: var(--accent-green);
+    background-color: var(--accent-green-bg);
+}
+
+.alert-item.price-drop {
+    border-left-color: var(--accent-red);
+    background-color: var(--accent-red-bg);
+}
+
+.alert-item.info {
+    border-left-color: var(--primary);
+    background-color: #EFF6FF;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────
+   DSA Diagnostic Tabs
+   ───────────────────────────────────────────── */
+.dsa-diagnostics {
+    min-height: 380px;
+}
+
+.dsa-tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: var(--text-main);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.dsa-tab-content {
+    display: none;
+    margin-top: 20px;
+}
+
+.dsa-tab-content.active {
+    display: block;
+}
+
+/* ─────────────────────────────────────────────
+   Tab Content - Sector Graph
+   ───────────────────────────────────────────── */
+.graph-visual-wrapper {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 24px;
+}
+
+.graph-visual {
+    background-color: var(--bg-primary);
+    height: 280px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.graph-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.sector-node {
+    position: absolute;
+    padding: 8px 14px;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--primary);
+    color: var(--text-main);
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.2s;
+    box-shadow: var(--card-shadow);
+}
+
+.sector-node:hover {
+    transform: scale(1.05);
+    background-color: var(--primary);
+    color: white;
+}
+
+.sector-node.highlighted {
+    background-color: var(--accent-green);
+    border-color: var(--accent-green);
+    color: white;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+    100% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+}
+
+.graph-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.traversal-box {
+    background-color: var(--bg-primary);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    border: 1px solid var(--border-color);
+}
+
+.traversal-output {
+    display: block;
+    color: var(--primary);
+    font-weight: 700;
+    margin-top: 4px;
+    font-family: 'Space Grotesk', monospace;
+}
+
+/* ─────────────────────────────────────────────
+   Tab Content - BST Tree
+   ───────────────────────────────────────────── */
+.bst-visual-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.tree-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tree-display {
+    background-color: var(--bg-primary);
+    height: 240px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: auto;
+}
+
+.tree-node-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 10px;
+}
+
+.tree-node-circle {
+    width: 44px;
+    height: 44px;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-main);
+    box-shadow: var(--card-shadow);
+}
+
+.tree-node-circle.root {
+    background-color: #EFF6FF;
+}
+
+.tree-node-circle.balance-alert {
+    background-color: var(--accent-red-bg);
+    border-color: var(--accent-red);
+}
+
+.code-box {
+    background-color: #0F172A;
+    color: #38BDF8;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* ─────────────────────────────────────────────
+   Tab Content - Hash Map
+   ───────────────────────────────────────────── */
+.hash-table-visual {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding-top: 12px;
+}
+
+.hash-slot {
+    background-color: var(--bg-primary);
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+}
+
+.hash-slot .bucket-num {
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.hash-slot .bucket-chain {
+    color: var(--primary);
+    font-weight: 700;
+    font-family: 'Space Grotesk', monospace;
+    margin-top: 2px;
+}
+
+/* ─────────────────────────────────────────────
+   Modals
+   ───────────────────────────────────────────── */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    animation: modalSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlide {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-family: var(--font-heading);
+}
+
+.close-modal {
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.close-modal:hover {
+    color: var(--text-main);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.mb-4 { margin-bottom: 16px; }
+
+/* Footer */
+.main-footer {
+    text-align: center;
+    padding: 32px 0 16px;
+    color: var(--text-muted);
+    font-size: 12px;
+}

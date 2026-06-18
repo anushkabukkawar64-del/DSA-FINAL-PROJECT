@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Indian Stock Market & Portfolio Management Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-logo">
+            <span class="flag-icon">🇮🇳</span>
+            <div>
+                <h1>SMART STOCK ANALYTICS</h1>
+                <p class="subtitle">NSE/BSE Portfolio & DSA Explorer • B.Tech CSE Sem II</p>
+            </div>
+        </div>
+        <div class="market-status-bar">
+            <div class="status-item">
+                <span class="status-dot green"></span>
+                <span class="status-text">NSE/BSE LIVE</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Market Trend:</span>
+                <span id="market-trend-badge" class="trend-badge bullish">BULLISH 📈</span>
+            </div>
+            <button id="tick-btn" class="btn btn-secondary btn-tick">
+                <span class="icon">🔄</span> Update Ticker
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- Top Metrics Row -->
+        <section class="card metrics-card col-span-3">
+            <div class="metric">
+                <span class="metric-label">Total Investment</span>
+                <span class="metric-val" id="total-investment">₹0.00</span>
+            </div>
+            <div class="divider"></div>
+            <div class="metric">
+                <span class="metric-label">Portfolio Value</span>
+                <span class="metric-val" id="portfolio-value">₹0.00</span>
+            </div>
+            <div class="divider"></div>
+            <div class="metric">
+                <span class="metric-label">Net Profit / Loss</span>
+                <span class="metric-val positive" id="net-pl">₹0.00 (0.0%)</span>
+            </div>
+            <div class="divider"></div>
+            <div class="metric">
+                <span class="metric-label">Cash Balance</span>
+                <span class="metric-val" id="cash-balance">₹10,00,000.00</span>
+            </div>
+        </section>
+
+        <!-- Main Column 1: Market Board -->
+        <section class="card col-span-2">
+            <div class="card-header">
+                <h2>📈 Live Stock Market Board</h2>
+                <div class="sort-controls">
+                    <span class="control-label">Sort:</span>
+                    <button class="chip active" onclick="sortMarket('symbol')">Symbol</button>
+                    <button class="chip" onclick="sortMarket('price')">Price</button>
+                    <button class="chip" onclick="sortMarket('growth')">Gain %</button>
+                    <button class="chip" onclick="sortMarket('volume')">Volume</button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="market-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Company</th>
+                            <th>Sector</th>
+                            <th class="text-right">Price (₹)</th>
+                            <th class="text-right">Change %</th>
+                            <th class="text-right">52W Range</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="market-tbody">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sidebar Right: Quick Transaction -->
+        <section class="card col-span-1">
+            <div class="card-header">
+                <h2>💼 Quick Order Ticket</h2>
+            </div>
+            <form id="trade-form" class="trade-form" onsubmit="event.preventDefault(); executeTrade();">
+                <div class="form-group">
+                    <label for="trade-symbol">Stock Symbol</label>
+                    <select id="trade-symbol" required onchange="updateEstimatedCost()">
+                        <!-- Dynamic select options -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="trade-qty">Quantity</label>
+                    <input type="number" id="trade-qty" min="1" value="10" required oninput="updateEstimatedCost()">
+                </div>
+                <div class="trade-type-selector">
+                    <label class="radio-btn buy">
+                        <input type="radio" name="trade-type" value="BUY" checked>
+                        <span>BUY</span>
+                    </label>
+                    <label class="radio-btn sell">
+                        <input type="radio" name="trade-type" value="SELL">
+                        <span>SELL</span>
+                    </label>
+                </div>
+                <div class="estimated-cost">
+                    <span>Estimated Cost:</span>
+                    <strong id="estimated-cost-val">₹0.00</strong>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Place Market Order</button>
+                <button type="button" class="btn btn-outline btn-block mt-2" onclick="undoLastTrade()">
+                    🔄 Undo Last Trade (LIFO Stack)
+                </button>
+            </form>
+        </section>
+
+        <!-- Main Column 2: Portfolio Holdings -->
+        <section class="card col-span-2">
+            <div class="card-header">
+                <h2>💼 Your Portfolio Holdings (AVL Tree Nodes)</h2>
+                <button class="btn btn-secondary btn-sm" onclick="showAvlStructure()">View AVL Balance Tree</button>
+            </div>
+            <div class="table-container">
+                <table class="portfolio-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th class="text-right">Shares Owned</th>
+                            <th class="text-right">Avg Purchase Price</th>
+                            <th class="text-right">Current Price</th>
+                            <th class="text-right">Invested Value</th>
+                            <th class="text-right">Current Value</th>
+                            <th class="text-right">Profit / Loss</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfolio-tbody">
+                        <tr>
+                            <td colspan="7" class="text-center empty-state">No holdings yet. Purchase some shares using the Order Ticket!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sidebar Right 2: Market Alerts -->
+        <section class="card col-span-1">
+            <div class="card-header">
+                <h2>📢 Circular Alert Queue (FIFO)</h2>
+                <button class="chip" onclick="clearAlerts()">Clear Queue</button>
+            </div>
+            <div class="alerts-container" id="alerts-list">
+                <!-- Alerts will append here -->
+            </div>
+        </section>
+
+        <!-- Footer / Academic DSA Diagnostic Row -->
+        <section class="card col-span-3 dsa-diagnostics">
+            <div class="card-header border-b">
+                <h2>🧠 Academic DSA Concept Visualizer</h2>
+                <div class="dsa-tabs">
+                    <button class="tab-btn active" onclick="switchDsaTab('tab-graph')">Sector Graph (BFS/DFS)</button>
+                    <button class="tab-btn" onclick="switchDsaTab('tab-bst')">BST (Price Hierarchy)</button>
+                    <button class="tab-btn" onclick="switchDsaTab('tab-hash')">Chaining HashMap (O(1) Lookup)</button>
+                </div>
+            </div>
+
+            <!-- TAB 1: Sector Graph -->
+            <div id="tab-graph" class="dsa-tab-content active">
+                <div class="graph-visual-wrapper">
+                    <div class="graph-visual">
+                        <!-- Node circles and connections using clean CSS -->
+                        <div class="sector-node font-bold" style="top: 20%; left: 15%;" id="node-Banking" onclick="runGraphTraversal('Banking')">Banking</div>
+                        <div class="sector-node font-bold" style="top: 70%; left: 20%;" id="node-Infrastructure" onclick="runGraphTraversal('Infrastructure')">Infrastructure</div>
+                        <div class="sector-node font-bold" style="top: 80%; left: 50%;" id="node-Energy" onclick="runGraphTraversal('Energy')">Energy</div>
+                        <div class="sector-node font-bold" style="top: 50%; left: 80%;" id="node-Telecom" onclick="runGraphTraversal('Telecom')">Telecom</div>
+                        <div class="sector-node font-bold" style="top: 15%; left: 75%;" id="node-Technology" onclick="runGraphTraversal('Technology')">Technology</div>
+                        <div class="sector-node font-bold" style="top: 10%; left: 45%;" id="node-FMCG" onclick="runGraphTraversal('FMCG')">FMCG</div>
+                        
+                        <!-- Connecting SVG lines -->
+                        <svg class="graph-lines" width="100%" height="100%">
+                            <!-- Banking connects to Infra, FMCG, Tech -->
+                            <line x1="15%" y1="20%" x2="20%" y2="70%" stroke="#bdc3c7" stroke-width="2" />
+                            <line x1="15%" y1="20%" x2="45%" y2="10%" stroke="#bdc3c7" stroke-width="2" />
+                            <line x1="15%" y1="20%" x2="75%" y2="15%" stroke="#bdc3c7" stroke-width="2" />
+                            <!-- Infra connects to Energy -->
+                            <line x1="20%" y1="70%" x2="50%" y2="80%" stroke="#bdc3c7" stroke-width="2" />
+                            <!-- Tech connects to Telecom -->
+                            <line x1="75%" y1="15%" x2="80%" y2="50%" stroke="#bdc3c7" stroke-width="2" />
+                            <!-- Energy connects to Telecom -->
+                            <line x1="50%" y1="80%" x2="80%" y2="50%" stroke="#bdc3c7" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <div class="graph-legend">
+                        <h3>Sector Graph Explorer</h3>
+                        <p class="text-muted">Click any sector node to view connectivity traversal paths.</p>
+                        <div class="traversal-box">
+                            <strong>BFS Traversal:</strong>
+                            <span id="bfs-output" class="traversal-output">-</span>
+                        </div>
+                        <div class="traversal-box">
+                            <strong>DFS Traversal:</strong>
+                            <span id="dfs-output" class="traversal-output">-</span>
+                        </div>
+                        <div class="traversal-box">
+                            <strong>Diversification Advice:</strong>
+                            <span id="diversify-output" class="traversal-output">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: BST -->
+            <div id="tab-bst" class="dsa-tab-content">
+                <div class="bst-visual-wrapper">
+                    <div class="tree-controls">
+                        <button class="chip" onclick="traverseBST('inorder')">InOrder Traversal</button>
+                        <button class="chip" onclick="traverseBST('preorder')">PreOrder Traversal</button>
+                        <button class="chip" onclick="traverseBST('postorder')">PostOrder Traversal</button>
+                    </div>
+                    <div class="tree-display" id="bst-tree-container">
+                        <!-- Dynamic Tree nodes -->
+                    </div>
+                    <div class="traversal-log mt-3">
+                        <strong>Traversal output:</strong>
+                        <div class="code-box" id="bst-traversal-output">Click a traversal button to inspect path outputs.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: Hash Map -->
+            <div id="tab-hash" class="dsa-tab-content">
+                <p class="text-muted">Direct stock lookup is handled by a custom <strong>23-Bucket Chaining Hash Map</strong>. Below is a map of the hash codes generated by each Indian Stock Symbol:</p>
+                <div class="hash-table-visual" id="hash-table-container">
+                    <!-- Dynamic slots -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for AVL/Tree visual -->
+    <div id="avl-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>AVL Portfolio Balance Tree Structure</h2>
+                <span class="close-modal" onclick="closeAvlModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted mb-4">Demonstrates self-balancing nodes (Left-Left, Right-Right rotations) based on Alphabetical symbols. Red nodes indicate non-leaf balanced structure.</p>
+                <div class="tree-display" id="avl-tree-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>© 2026 Smart Stock Market Analysis & Portfolio Management Platform. Prepared for ITM Skills University.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
